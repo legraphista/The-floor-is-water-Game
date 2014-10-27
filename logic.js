@@ -7,7 +7,7 @@ var Logic = {
         for (column = 0; column < game.options.width; column++) {
             w = game.options.height;
             for (row = 0; row < game.options.height; row++)
-                if (game.matrix[row][column].visible()) {
+                if (game.matrix[row][column].isValidForNewBlock() == false) {
                     w--;
                 }
             weights.push(w);

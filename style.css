@@ -30,3 +30,9 @@ div.block{
     border: 1px solid white;
     color: white;
 }
+
+div.falling-block{
+    background: rgba(0, 255, 0, 1);
+    border: 1px solid white;
+    color: white;
+}

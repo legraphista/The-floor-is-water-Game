@@ -4,8 +4,9 @@ var Options = {
     "pxWidth" : 600,
     "pxHeight" : 450,
     "blockWidth": 50,
-    "pxSpeed": 0.12,
+    "pxSpeed": 0.13,
     "FPS": 60,
+    "fallRate": 3
 };
 
 var Game = {};
@@ -13,6 +14,7 @@ Game.secondCount = 0;
 Game.tickCount = 0;
 Game.matrix = new Array();
 Game.DEBUG = true;
+Game.fallingBlocks = new Array();
 
 Game.options = Options;
 
@@ -97,15 +99,22 @@ Game.tick = function () {
     }
 
     if (this.tickCount % 30 == 0) {
-        
+
         column = Logic.bestLocForBlock(this);
 
         for (row = 0; row < this.matrix.length; row++)
-            if (this.matrix[row][column].visible() == false) {
-                this.matrix[row][column].visible(true);
+            if (this.matrix[row][column].isValidForNewBlock()) {
+                Game.matrix[row][column].visible(true);
+                Game.matrix[row][column].fall();
                 break;
             }
 
+    }
+
+    if (needUpdate) {
+        this.fallingBlocks.forEach(function (block) {
+            block.boardUpdated();
+        });
     }
 
     this.render(needUpdate);
